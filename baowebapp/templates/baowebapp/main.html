@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="{% static 'css/grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700;9..40,900&family=Ranga&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        <div class="grid">
+            <div class="row no-gutters">
+                 <!-- Navbar -->
+                <div class="col ls-1">
+                    <div class="navbar">
+                        <div class="navbar__addButton">
+                            <img src="{% static 'img/add_logo.svg' %}" alt="" class=navbar__addButton-img>
+                        </div>
+                        <ul class="navbar__list">
+                            <a href="{% url 'main' %}"  class="navbar__item active">
+                                <img src="{% static 'img/student-person-svgrepo-com.svg' %}" alt="" class="navbar__item-img">
+                                <div class="navbar__item-heading">Student</div>
+                            </a>
+                            <a href="{% url 'addMember' %}" class="navbar__item">
+                                <img src="{% static 'img/group-add-people-svgrepo-com.svg' %}" alt="" class="navbar__item-img">
+                                <div class="navbar__item-heading">Add</div>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            
+
+                 
+                <div class="col l-11">
+                    <!-- Header -->
+                    <div class="row no-gutters">
+                        <div class="col l-12">
+                            <div class="header">
+                                <div class="header__wrapper">
+                                    <div class="header__heading">
+                                        <div class="header__heading-date">
+                                            12:00 AM Thursday, 30 / 11 /2023
+                                        </div>
+                                        <div class="header_title">Welcome to VDT Students Manager</div>
+                                        <div class="header__account">
+                                            <div class="header__account-wrapper">
+                                                <img src="{% static 'img/avatar.svg' %}" alt="" class="header__account-img">
+                                                <div class="header__account-info">
+                                                    <div class="header__account-name">@Dmin</div>
+                                                    <div class="header__acount-role">Admin</div>
+                                                </div>
+                                                <div class="header__logout-wrapper">
+                                                    <img src="{% static 'img/bell.svg' %}" alt="" class="header__logout-img">
+                                                </div>
+                                                <div class="header__logout-wrapper">
+                                                    <img src="{% static 'img/logout.svg' %}" alt="" class="header__logout-img">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dash Board -->
+                    
+                    <!-- Student List-->
+                    <div class="row no-gutters">
+                        <div class="col l-8">
+                            <div class="appointment">
+                                <div class="appointment__headers">
+                                    <div class="appointment__headers-wrapper">
+                                        <img src="{% static 'img/paper.svg' %}" alt="" class="appointment__headers-img">
+                                        <div class="appointment__heading">Student List</div>
+                                    </div>
+                                    <div class="appointment__headers-wrapper">
+                                        <a href="{% url 'addMember' %}" class="appointment__add-wrapper">
+                                            <img class="appointment__add" src="{% static 'img/plus-square-svgrepo-com.svg' %}" alt="">
+                                        </a>
+                                        <div class="appointment__search-wrapper">
+                                            <img src="{% static 'img/brown-search.svg' %}" alt="" class="appointment__search-icon">
+                                            <input class="appointment__search">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="appointment__list">
+                                    <div class="appointment__list-header">
+                                        <div class="appoitment__list-header-item-patient">
+                                            Student Name
+                                        </div>
+                                        <div class="appoitment__list-header-item">
+                                            Gender
+                                        </div>
+                                        <div class="appoitment__list-header-item">
+                                            School
+                                        </div>
+                                        <div class="appoitment__list-header-item">
+                                            Actions
+                                        </div>
+                                    </div>
+                                    <div class="appointment__list-wrapper">
+                                        {% for student in students %}
+                                        <div class="appointment__list-item">
+                                            <div class="appointment__item-patient">
+                                                <img src="{% static 'img/avatar.svg' %}" class="appointment__item-img">
+                                                <div src="" class="appointment__item-name">{{student.name}}</div>
+                                            </div>
+                                            
+                                            {% if student.gender == 0  %}
+                                                <div class="appointment__item-attr">Nam</div>
+                                            {% elif student.gender == 1 %}
+                                                <div class="appointment__item-attr">Nữ</div>
+                                            {% else %}
+                                                <div class="appointment__item-attr">Khác</div>
+                                            {% endif %}
+                                            <div class="appointment__item-attr">{{student.school}}</div>
+                                            <div class="appointment__item-attr">
+                                                <a href="{% url 'updateMember' student.student_id %}" class="edit__wrapper">
+                                                    <img class="appointment__img" src="{% static 'img/edit-3-svgrepo-com.svg' %}" alt="">
+                                                </a>
+                                                <a href="{% url 'deleteMember' student.student_id %}" class="edit__wrapper">
+                                                    <img class="appointment__img" src="{% static 'img/delete-svgrepo-com.svg' %}" alt="">
+                                                </a>
+                                                <img class="appointment__img" src="{% static 'img/info-square-svgrepo-com.svg' %}" alt="">
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col l-4">
+                            <div class="img__wrapper">
+                                <img class="decor__img" src="{% static 'img/anh-man-hinh-2023-09-19-luc-083728-461x280.png' %}" alt="">
+                                <img class="decor__img__2" src="{% static 'img/images.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
