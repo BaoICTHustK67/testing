@@ -10,25 +10,56 @@ on:
       - main
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd="pg_isready -U postgres -d postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+      DJANGO_SETTINGS_MODULE: bao_3_tier_webapp
+
     steps:
     - uses: actions/checkout@v2
+
+
     - name: Set up Python 3.12
       uses: actions/setup-python@v2
       with: 
         python-version: 3.12
+
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+
+
     - name: Coverage report
       run: |
         pip install coverage
         coverage run manage.py test
         coverage report
+
+    - name: Set up the database
+      run: |
+        python manage.py migrate
+
     - name: Django Testing
       run: |
         python3 manage.py test

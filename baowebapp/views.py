@@ -38,6 +38,7 @@ def addMember(request):
 
         Student.objects.create(name=name, gender=gender, school=school)
         return render(request, 'baowebapp/main.html')
+    
     return render(request, 'baowebapp/add_member.html', context)
 
 def updateMember(request, pk):

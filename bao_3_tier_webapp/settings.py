@@ -82,10 +82,11 @@ WSGI_APPLICATION = "bao_3_tier_webapp.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': 'webappdb',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'B@o.16092004',
-        'PORT': '5433',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
